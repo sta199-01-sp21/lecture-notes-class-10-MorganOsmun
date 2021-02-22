@@ -1,7 +1,7 @@
 ---
 title: "Introduction to probability"
-author: ""
-date: ""
+author: "Morgan Osmun"
+date: "2/22/2021"
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -49,17 +49,22 @@ xtabs(~ Treatment + Improved, data = Arthritis) %>%
 ```
 
 - How many patients were enrolled in the clinical trial?
+84 patients were enrolled. 
 
 - What is the probability a randomly selected patient received the placebo?
+Probability = (43/84)*100 = 52%
 
 - What is the probability a randomly selected patient received the placebo
   and had a marked improvement?
+Probability = (7/84)*100 = 8.3%
   
 - What is the probability a randomly selected patient received the placebo
   and the treatment?
-  
+Probability = 0%
+
 - What is the probability a randomly selected patient had some improvement or
   was on the treatment?
+Probability = 55/84 = 65%
 
 ## Using computer simulations to calculate probabilities
 
@@ -74,7 +79,10 @@ marbles <- c("red", "red", "white", "red", "blue", "blue", "red", "blue")
 
 Suppose we draw a single marble from our imaginary box, where all the marbles
 are equally likely to be selected. What is the probability the marble is blue? 
+3/8 = 37.5%
+
 How about white?
+1/8 = 12.5%
 
 We can simulate this "drawing" with the `sample()` function.
 
@@ -101,6 +109,7 @@ prop.table(counts)
 ```
 
 How close is this value to the "true" probability?
+Very close to expected probabilities.
 
 **To summarize our process:**
 
@@ -156,13 +165,20 @@ difference between dice roll 1 and dice roll 2 is equal to 4.
 Perform a simulation to compute this empirical probability.
 
 Write down your guess to the answer before you calculate it.
+I think the square of dice roll 1 being equal to dice roll 2 has a higher probability because they it has 3  possibilities (1,1 ; 1;1, 2,4) and the absolute value between rolls being 4 has 2 possibilities (5,1 ; 6,2).
 
 ```{r simulate_rolls}
-
+roll_results <- tibble(
+  die_1 = replicate(n = 10000, expr = sample(1:6, size = 1)),
+  die_2 = replicate(n = 10000, expr = sample(1:6, size = 1))
+)
 ```
 
 ```{r identify_events}
-
+roll_results <- roll_results %>% 
+  mutate(event_1 = (die_1)^2 == die_2,
+         event_2 = abs(die_1 - die_2) == 4)
+roll_results
 ```
 
 ```{r summarize_rolls}
