@@ -165,7 +165,7 @@ difference between dice roll 1 and dice roll 2 is equal to 4.
 Perform a simulation to compute this empirical probability.
 
 Write down your guess to the answer before you calculate it.
-I think the square of dice roll 1 being equal to dice roll 2 has a higher probability because they it has 3  possibilities (1,1 ; 1;1, 2,4) and the absolute value between rolls being 4 has 2 possibilities (5,1 ; 6,2).
+I think the absolute value between rolls being 4 has a higher probability because it has 4 possibilities (5,1 ; 6,2 ; 1,5 ; 2,6). The square of dice roll 1 being equal to dice roll 2 only has 3  possibilities (1,1 ; 1;1, 2,4).
 
 ```{r simulate_rolls}
 roll_results <- tibble(
@@ -182,8 +182,18 @@ roll_results
 ```
 
 ```{r summarize_rolls}
+roll_results %>%
+  count(event_1) %>%
+  mutate(proportion = n / sum(n)) %>%
+  print()
 
+roll_results %>%
+  count(event_2) %>%
+  mutate(proportion = n / sum(n)) %>%
+  print()
 ```
+
+It is more likely that the absolute value of the difference between dice roll 1 and dice roll 2 is equal to 4 than for the square of dice roll 1 to equal dice roll 2. 
 
 ## Additional Resources-please look at before Weds.
 
