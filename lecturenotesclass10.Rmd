@@ -183,14 +183,8 @@ roll_results
 
 ```{r summarize_rolls}
 roll_results %>%
-  count(event_1) %>%
-  mutate(proportion = n / sum(n)) %>%
-  print()
-
-roll_results %>%
-  count(event_2) %>%
-  mutate(proportion = n / sum(n)) %>%
-  print()
+  summarise(event_1_prob = mean(event_1),
+            event_2_prob = mean(event_2))
 ```
 
 It is more likely that the absolute value of the difference between dice roll 1 and dice roll 2 is equal to 4 than for the square of dice roll 1 to equal dice roll 2. 
